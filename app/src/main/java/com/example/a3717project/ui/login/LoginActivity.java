@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a3717project.HomePage;
 import com.example.a3717project.R;
 import com.example.a3717project.ui.login.LoginViewModel;
 import com.example.a3717project.ui.login.LoginViewModelFactory;
@@ -132,5 +134,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void OpenHomePage(View view) {
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
     }
 }

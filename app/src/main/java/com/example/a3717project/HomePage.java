@@ -1,6 +1,30 @@
 package com.example.a3717project;
 
-public class HomePage {
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
 
-    //add something here
+import androidx.appcompat.app.AppCompatActivity;
+
+public class HomePage extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+    }
+
+    public void OpenProfileActivity(View view) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void OpenCampgroundDetails(View view) {
+        Intent intent = new Intent(this, CamgroundDetailsActivity.class);
+        startActivity(intent);
+    }
+
+    public void Back(View view) {
+        onBackPressed();
+    }
 }
