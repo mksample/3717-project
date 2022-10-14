@@ -10,20 +10,20 @@
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
         android:onClick="Back"
+        android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/campDetailsButton" />
+        app:layout_constraintTop_toBottomOf="@+id/historyButton" />
 
     <Button
         android:id="@+id/profileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile"
         android:onClick="OpenProfileActivity"
+        android:text="Profile"
         app:layout_constraintBottom_toTopOf="@+id/campDetailsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -34,11 +34,22 @@
         android:id="@+id/campDetailsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Campground details"
         android:onClick="OpenCampgroundDetails"
-        app:layout_constraintBottom_toTopOf="@+id/backButton"
+        android:text="Campground details"
+        app:layout_constraintBottom_toTopOf="@+id/historyButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileButton" />
+
+    <Button
+        android:id="@+id/historyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="History"
+        android:onClick="OpenHistoryActivity"
+        app:layout_constraintBottom_toTopOf="@+id/backButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/campDetailsButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

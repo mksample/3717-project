@@ -24,6 +24,11 @@ public class HomePage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void OpenHistoryActivity(View view) {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
     public void Back(View view) {
         onBackPressed();
     }
