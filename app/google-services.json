@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1027185226026",
+    "project_id": "campout-d5f58",
+    "storage_bucket": "campout-d5f58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027185226026:android:bfa83c97c3704800966e53",
+        "android_client_info": {
+          "package_name": "com.example.a3717project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027185226026-f85vtlefrjaiu35gniqqkcf7afcgr4k7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.a3717project",
+            "certificate_hash": "9c651f5882cb51220b7fc6a6629b19019c4b58a3"
+          }
+        },
+        {
+          "client_id": "1027185226026-4ih1fln4htt56c16jnobe9hs2kdel149.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIaXymQNNs3iYpKE3fNxUvSnt7RLqoVYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027185226026-4ih1fln4htt56c16jnobe9hs2kdel149.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
