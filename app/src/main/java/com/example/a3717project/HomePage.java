@@ -1,12 +1,14 @@
 package com.example.a3717project;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,9 +51,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class HomePage extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener  {
+public class HomePage extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
     // Views and objects
     SupportMapFragment mapFragment;
     TextView weatherDisplay;
@@ -78,7 +83,6 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
 
         // Get layout views
         weatherDisplay = findViewById(R.id.weatherInfo);
-        popupWeatherDisplay = findViewById(R.id.info);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
 
         // Set default location
@@ -290,6 +294,37 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
             queue.add(request);
             return null;
         }
+    }
+
+    public void RefreshHomePage(MenuItem item){
+        Intent intent = new Intent(this, HomePage.class);
+        finish();
+        startActivity(intent);
+    }
+    public void OpenFavouritesPage(MenuItem item) {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+    public void OpenProfilePage(MenuItem item) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
+        switch (item.getItemId()) {
+            case R.id.home:
+                break;
+            case R.id.Favourites:
+                break;
+            case R.id.profile:
+                break;
+        }
+        if (fragment != null) {
+            System.out.println("TEST");
+        }
+        return true;
     }
 
     public StringBuilder sbMethod() {
