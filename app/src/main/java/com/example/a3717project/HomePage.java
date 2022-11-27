@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -51,8 +52,18 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class HomePage extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapClickListener, BottomNavigationView.OnNavigationItemSelectedListener {
@@ -60,6 +71,7 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
     SupportMapFragment mapFragment;
     TextView weatherDisplay;
     TextView popupWeatherDisplay;
+    Button favouriteButton;
 
     // Map data
     GoogleMap mMap;
@@ -73,8 +85,28 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
     private final String WeatherUrl = "https://api.openweathermap.org/data/2.5/weather";
     private final String appid = "48896255671a059ef4e3ba1657a6c114";
 
+    // Firebase information
+    FirebaseDatabase database;
+    DatabaseReference reference;
+    FirebaseUser user;
+
     // Formatting
     DecimalFormat df = new DecimalFormat("#.##");
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Load database
+        database = FirebaseDatabase.getInstance();
+
+        // Load user information
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user==null) {
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity(login);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +124,16 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
 
         // Load the map
         Objects.requireNonNull(mapFragment).getMapAsync(this);
+        
+        // Load database
+        database = FirebaseDatabase.getInstance();
+
+        // Load user information
+/*        user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user==null) {
+            Intent login = new Intent(this, LoginActivity.class);
+            startActivity(login);
+        }*/
     }
 
     // When the map is ready, set the location to BCIT with a marker
@@ -132,8 +174,46 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
         displayWeatherMain(loc);
     }
 
-    public void onFavoriteButtonClick(View view) {
+    @SuppressLint("SetTextI18n")
+    public void onFavoriteButtonClick() {
         // FIRESTORE HERE, STORE currentMarker.getTitle() AND currentMarker.getPosition()
+
+        // Create favourite
+        Favourite favourite = new Favourite();
+        favourite.setLatitude(currentMarker.getPosition().latitude);
+        favourite.setLongitude(currentMarker.getPosition().longitude);
+
+        // Load database reference
+        reference = database.getReference(user.getUid());
+        Task setFavourite = reference.child(currentMarker.getTitle()).setValue(favourite);
+        favouriteButton.setText("Unfavourite");
+        favouriteButton.setOnClickListener(v -> onUnfavouriteButtonClick());
+        setFavourite.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Could not add a favourite! Try again later...", Toast.LENGTH_SHORT).show();
+                favouriteButton.setText("Favourite");
+                favouriteButton.setOnClickListener(v -> onFavoriteButtonClick());
+            }
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void onUnfavouriteButtonClick() {
+        // Remove favourite
+        // Load database reference
+        reference = database.getReference(user.getUid());
+        Task setFavourite = reference.child(currentMarker.getTitle()).removeValue();
+        favouriteButton.setText("Favourite");
+        favouriteButton.setOnClickListener(v -> onFavoriteButtonClick());
+        setFavourite.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Could not remove favourite! Try again later...", Toast.LENGTH_SHORT).show();
+                favouriteButton.setText("Unfavourite");
+                favouriteButton.setOnClickListener(v -> onUnfavouriteButtonClick());
+            }
+        });
     }
 
     // Displays the weather in the main screen display
@@ -153,6 +233,7 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
     }
 
     // Shows a popup window when the marker is clicked
+    @SuppressLint("SetTextI18n")
     public void onMarkerShowPopupWindow(Marker marker) {
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
@@ -160,6 +241,25 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
         View popupView = inflater.inflate(R.layout.campground_details, null);
         TextView info = popupView.findViewById(R.id.info);
         popupWeatherDisplay = info;
+        favouriteButton = popupView.findViewById(R.id.favourite);
+        reference = database.getReference(user.getUid());
+        reference.child(marker.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue()!=null) {
+                    favouriteButton.setText("Unfavourite");
+                    favouriteButton.setOnClickListener(v -> onUnfavouriteButtonClick());
+                } else {
+                    favouriteButton.setText("Favourite");
+                    favouriteButton.setOnClickListener(v -> onFavoriteButtonClick());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         String title = marker.getTitle() + "\n\n";
         info.setText(title);
         displayWeatherMain(marker.getPosition());
@@ -229,6 +329,7 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    favouriteButton.setVisibility(View.VISIBLE);
                 }
             }, new Response.ErrorListener() {
                 @Override

@@ -22,6 +22,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth authorization;
 
     @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -96,8 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             authorization.signInWithEmailAndPassword(emailText, passText).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
-                    Intent intent = new Intent(LoginActivity.this, HomePage.class);
-                    startActivity(intent);
+                    super.onBackPressed();
                 } else {
                     Toast.makeText(getApplicationContext(), "Login failed! Please try again", Toast.LENGTH_LONG).show();
                     progressBar.setVisibility(View.GONE);
