@@ -7,14 +7,133 @@
     tools:context=".ProfileActivity">
 
     <Button
+        android:id="@+id/yes_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#007D00"
+        android:text="@string/yes"
+        android:visibility="gone"
+        android:onClick="confirmDelete"
+        app:layout_constraintBottom_toBottomOf="@+id/delAccount"
+        app:layout_constraintEnd_toEndOf="@+id/delAccount"
+        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/delAccount"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/no_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="@string/no"
+        android:visibility="gone"
+        android:onClick="cancel"
+        app:layout_constraintBottom_toBottomOf="@+id/delAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.415"
+        app:layout_constraintStart_toStartOf="@+id/delAccount"
+        app:layout_constraintTop_toTopOf="@+id/delAccount"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
         android:id="@+id/profileBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="back"
         android:onClick="Back"
+        android:text="@string/action_sign_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.944" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/passChange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/passChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="144dp"
+        android:text="@string/action_change_password"
+        android:onClick="changePassword"
+        app:layout_constraintBottom_toTopOf="@+id/profileBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/delAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="@string/action_delete_account"
+        android:onClick="delete"
+        app:layout_constraintBottom_toTopOf="@+id/profileBackButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passChange" />
+
+    <Button
+        android:id="@+id/yes_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#007D00"
+        android:onClick="confirmPassChange"
+        android:text="@string/yes"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/passChange"
+        app:layout_constraintEnd_toEndOf="@+id/passChange"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
+    <Button
+        android:id="@+id/no_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:onClick="cancel"
+        android:text="@string/no"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/passChange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/passChange"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
+    <TextView
+        android:id="@+id/areyousure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="3"
+        android:scaleY="4"
+        android:text="@string/are_you_sure"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 </androidx.constraintlayout.widget.ConstraintLayout>
