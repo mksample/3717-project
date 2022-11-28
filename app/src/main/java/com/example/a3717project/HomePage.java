@@ -317,8 +317,7 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
                         String currentCountry = jsonObjectSys.getString("country");
                         String currentCity = response.getString("name");
 
-                        weatherDisplay.append("Current weather of " + currentCity + " (" + currentCountry + ")\n"
-                                + "Temperature: " + df.format(temp) + " \u2103\n"
+                        weatherDisplay.append("Temperature: " + df.format(temp) + " \u2103\n"
                                 + "Feels like: " + df.format(feelslike) + " \u2103\n"
                                 + "Humidity: " + humidity + "%\n"
                                 + "Description: " + description + "\n"
@@ -373,8 +372,7 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
                         String currentCountry = jsonObjectSys.getString("country");
                         String currentCity = response.getString("name");
 
-                        popupWeatherDisplay.append("Current weather of " + currentCity + " (" + currentCountry + ")\n"
-                                + "Temperature: " + df.format(temp) + " \u2103\n"
+                        popupWeatherDisplay.append("Temperature: " + df.format(temp) + " \u2103\n"
                                 + "Feels like: " + df.format(feelslike) + " \u2103\n"
                                 + "Humidity: " + humidity + "%\n"
                                 + "Description: " + description + "\n"
