@@ -4,15 +4,15 @@
         android:title="Home"
         android:id="@+id/home"
         android:onClick="RefreshHomePage"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/home_icon"/>
     <item
         android:title="Favourites"
         android:id="@+id/Favourites"
         android:onClick="OpenFavouritesPage"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/favourites_icon"/>
     <item
         android:title="Profile"
         android:id="@+id/profile"
         android:onClick="OpenProfilePage"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/profile_icon"/>
 </menu>
