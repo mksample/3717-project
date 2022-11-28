@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">3717 Project</string>
+    <string name="app_name">Campout</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
