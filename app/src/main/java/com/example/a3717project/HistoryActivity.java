@@ -2,6 +2,8 @@ package com.example.a3717project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,14 +29,14 @@ public class HistoryActivity extends AppCompatActivity {
     DatabaseReference reference;
     FirebaseUser user;
 
-    Spinner favourites;
-    ArrayList<String> list;
+    RecyclerView favourites;
+    ArrayList<Favourite> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        favourites = this.findViewById(R.id.favouritespinner);
+        favourites = this.findViewById(R.id.favouriteRecycler);
         list = new ArrayList<>();
 
         // Pull from database
@@ -47,8 +49,11 @@ public class HistoryActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    String favourite = String.valueOf(ds.getKey());
-                    list.add(favourite);
+                    Favourite f = ds.getValue(Favourite.class);
+                    list.add(f);
+                    recycleViewAdapter myRecyclerViewAdapter = new recycleViewAdapter(HistoryActivity.this, list);
+                    favourites.setLayoutManager(new LinearLayoutManager(HistoryActivity.this));
+                    favourites.setAdapter(myRecyclerViewAdapter);
                 }
             }
 
@@ -57,27 +62,6 @@ public class HistoryActivity extends AppCompatActivity {
 
             }
         });
-        // Load values from database into spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        favourites.setAdapter(adapter);
-        Intent intent = new Intent(this, HomePage.class);
-        favourites.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "I'm here, ma!", Toast.LENGTH_SHORT).show();
-                intent.putExtra("name", favourites.getSelectedItem().toString());
-                startActivity(intent);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    public void debugButton(View view) {
-        Toast.makeText(getApplicationContext(), "Geoff", Toast.LENGTH_LONG).show();
     }
 
     public void Back(View view) {

@@ -176,10 +176,10 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
 
     @SuppressLint("SetTextI18n")
     public void onFavoriteButtonClick() {
-        // FIRESTORE HERE, STORE currentMarker.getTitle() AND currentMarker.getPosition()
 
         // Create favourite
         Favourite favourite = new Favourite();
+        favourite.setTitle(currentMarker.getTitle());
         favourite.setLatitude(currentMarker.getPosition().latitude);
         favourite.setLongitude(currentMarker.getPosition().longitude);
 
@@ -574,7 +574,7 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, G
 
                 markerOptions.title(name + " : " + vicinity);
 
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.camp_icon));
 
                 // Placing a marker on the touched position
                 Marker m = mMap.addMarker(markerOptions);
